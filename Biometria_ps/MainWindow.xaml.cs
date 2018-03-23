@@ -390,7 +390,18 @@ namespace Biometria_ps
 
         private void gray_button_Click(object sender, RoutedEventArgs e)
         {
-
+            var color = new System.Drawing.Color();
+            for (int i = 0; i < bm.Width; i++)
+            {
+                for (int j = 0; j < bm.Height; j++)
+                {
+                    color = bm.GetPixel(i, j);
+                    //bm.SetPixel(i, j, System.Drawing.Color.FromArgb(color.A, color.R, color.R, color.R));
+                    bm.SetPixel(i, j, System.Drawing.Color.FromArgb(color.A, color.G, color.G, color.G));
+                    //bm.SetPixel(i, j, System.Drawing.Color.FromArgb(color.A, color.B, color.B, color.B));
+                }
+            }
+            displayImage(bm);
         }
     }
 }
