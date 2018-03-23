@@ -387,5 +387,10 @@ namespace Biometria_ps
             displayImage(bm);
 
         }
+
+        private void gray_button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

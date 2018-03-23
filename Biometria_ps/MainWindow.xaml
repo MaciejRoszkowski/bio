@@ -38,7 +38,7 @@
         <Button x:Name="dim_button" Content="przyciemnij" HorizontalAlignment="Left" Margin="0,210,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="dim_button_Click"/>
         <Button x:Name="equalize_button" Content="wyrownaj" HorizontalAlignment="Left" Margin="0,240,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="equalize_button_Click"  />
         <Button x:Name="strech_button" Content="rozciągnij" HorizontalAlignment="Left" Margin="0,270,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="strech_button_Click" />
-        <Button x:Name="gray_button" Content="szarość" HorizontalAlignment="Left" Margin="0,300,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2"  />
+        <Button x:Name="gray_button" Content="szarość" HorizontalAlignment="Left" Margin="0,300,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="gray_button_Click"  />
         <TextBlock x:Name="text" HorizontalAlignment="Left" Margin="0,700,0,0" TextWrapping="Wrap" Text="RGB" VerticalAlignment="Top" Grid.Column="2"/>
         <TextBox Name="tr" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="20,510,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="40"/>
         <TextBox Name="tg" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="20,540,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="40"/>
