@@ -56,3 +56,4 @@ C:\Users\Maciek\Desktop\Biometria_ps\bio\Biometria_ps\obj\Debug\Biometria_ps.csp
 C:\Users\Maciek\Desktop\Biometria_ps\bio\Biometria_ps\obj\Debug\Biometria_ps.csproj.CoreCompileInputs.cache
 C:\Users\Maciek\Desktop\Biometria_ps\bio\Biometria_ps\obj\Debug\Biometria_ps.exe
 C:\Users\Maciek\Desktop\Biometria_ps\bio\Biometria_ps\obj\Debug\Biometria_ps.pdb
+C:\Users\Maciek\Desktop\Biometria_ps\bio\Biometria_ps\obj\Debug\Biometria_ps.csproj.CopyComplete

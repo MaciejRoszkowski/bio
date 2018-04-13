@@ -387,8 +387,7 @@ namespace Biometria_ps
             displayImage(bm);
 
         }
-
-        private void gray_button_Click(object sender, RoutedEventArgs e)
+        private void GrayScale()
         {
             var color = new System.Drawing.Color();
             for (int i = 0; i < bm.Width; i++)
@@ -401,7 +400,163 @@ namespace Biometria_ps
                     //bm.SetPixel(i, j, System.Drawing.Color.FromArgb(color.A, color.B, color.B, color.B));
                 }
             }
+        }
+
+        private void binarization_button_Click(object sender, RoutedEventArgs e)
+        {
+            var color = new System.Drawing.Color();
+            GrayScale();
+            if (int.Parse(bin_value.Text)>255 || int.Parse(bin_value.Text)<0)
+            {
+                return;
+            }
+            binarization(int.Parse(bin_value.Text));
+        }
+        private void binarization(int value)
+        {
+            var color = new System.Drawing.Color();
+            GrayScale();
+
+            for (int i = 0; i < bm.Width; i++)
+            {
+                for (int j = 0; j < bm.Height; j++)
+                {
+                    color = bm.GetPixel(i, j);
+                    if (color.G < value)
+                    {
+                        bm.SetPixel(i, j, System.Drawing.Color.FromArgb(color.A, 0, 0, 0));
+                    }
+                    else
+                    {
+                        bm.SetPixel(i, j, System.Drawing.Color.FromArgb(color.A, 255, 255, 255));
+
+                    }
+                }
+            }
             displayImage(bm);
+
+
+        }
+        private void otsu_button_Click(object sender, RoutedEventArgs e)
+        {
+            GrayScale();
+            var hist = new int[256];
+            var tmp = new System.Drawing.Color();
+            for (int i = 0; i < 256; i++)
+            {
+                hist[i] = 0;
+
+            }
+            for (int i = 0; i < bm.Width; i++)
+            {
+                for (int j = 0; j < bm.Height; j++)
+                {
+                    tmp = bm.GetPixel(i, j);
+                    hist[tmp.G]++;
+                }
+            }
+
+            int total = bm.Width * bm.Height;
+            double wB = 0;
+            double wF = 0;
+            int sum = 0;
+            double sumB = 0;
+            double varMax = 0;
+            int threshold = 0;
+
+            for (int i = 0; i < 256; i++)
+            {
+                sum += i * hist[i];
+            }
+            for (int i = 0; i < 256; i++)
+            {
+                wB += hist[i];               // Weight Background
+                if (wB == 0) continue;
+
+                wF = total - wB;                 // Weight Foreground
+                if (wF == 0) break;
+
+                sumB += (i * hist[i]);
+
+                double mB = sumB / wB;            // Mean Background
+                double mF = (sum - sumB) / wF;    // Mean Foreground
+
+                // Calculate Between Class Variance
+                double varBetween = (float)wB * (float)wF * (mB - mF) * (mB - mF);
+
+                // Check if new maximum found
+                if (varBetween > varMax)
+                {
+                    varMax = varBetween;
+                    threshold = i;
+                }
+            }
+            binarization(threshold);
+        }
+
+        private void niblack_button_Click(object sender, RoutedEventArgs e)
+        {
+            GrayScale();
+            var tmpBitmap = new Bitmap(bm);
+            double avg=0;
+            int count = 0;
+            var tmp = new System.Drawing.Color();
+            double sD=0;
+
+            for (int i = 0; i < bm.Width; i++)
+            {
+                for (int j = 0; j < bm.Height; j++)
+                {
+                    //edytowany bit  i,j 
+                    avg = 0;
+                    count = 0;
+                    sD = 0;
+                    for (int k = i- (int.Parse(window_value.Text) / 2); k < i+(int.Parse(window_value.Text)/2)+1; k++)
+                    {
+                        for (int l = j-(int.Parse(window_value.Text) / 2); l < j + (int.Parse(window_value.Text) / 2)+1; l++)
+                        {
+                            if (k>=0 && k<bm.Width && l>=0 && l<bm.Height)
+                            {
+                                tmp = bm.GetPixel(k, l);
+                                avg += tmp.G;
+                                count++;
+                            }
+
+                        }
+                    }
+                    avg = avg / count;
+                    for (int k = i - (int.Parse(window_value.Text) / 2); k < i + (int.Parse(window_value.Text) / 2)+1; k++)
+                    {
+                        for (int l = j - (int.Parse(window_value.Text) / 2); l < j + (int.Parse(window_value.Text) / 2)+1; l++)
+                        {
+                            if (k >= 0 && k < bm.Width && l >= 0 && l < bm.Height)
+                            {
+                                tmp = bm.GetPixel(k,l);
+                                sD += Math.Pow((tmp.G - avg), 2);
+                            }
+
+                        }
+
+
+                    }
+                    sD =sD/ count;
+                    sD = Math.Sqrt(sD);
+                    tmp = bm.GetPixel(i, j);
+
+                    if (tmp.G>(avg+double.Parse(k_value.Text)*sD))
+                    {
+                        tmpBitmap.SetPixel(i, j, System.Drawing.Color.FromArgb(tmp.A, 255, 255, 255));
+
+                    }
+                    else
+                    {
+                        tmpBitmap.SetPixel(i, j, System.Drawing.Color.FromArgb(tmp.A, 0, 0,0));
+
+                    }
+
+                }
+            }
+            displayImage(tmpBitmap);
         }
     }
 }

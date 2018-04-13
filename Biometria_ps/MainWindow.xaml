@@ -10,7 +10,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="300"></ColumnDefinition>
-            <ColumnDefinition Width="115"></ColumnDefinition>
+            <ColumnDefinition Width="130"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Border Name="border" BorderThickness="1" Grid.Column="0" ClipToBounds="True">
 
@@ -29,16 +29,18 @@
             </Viewbox>
         </Border>
 
-        <Button x:Name="load_button" Content="zaladuj" HorizontalAlignment="Left" Margin="0,30,0,0" VerticalAlignment="Top" Width="105" Click="load_button_Click_1" Grid.Column="2"/>
-        <Button x:Name="zoom_button" Content="size+" HorizontalAlignment="Left" Margin="0,60,0,0" VerticalAlignment="Top" Width="105" Click="zoom_button_Click" Grid.Column="2"/>
-        <Button x:Name="unzoom_button" Content="size-" HorizontalAlignment="Left" Margin="0,90,0,0" VerticalAlignment="Top" Width="105" Click="unzoom_button_Click" Grid.Column="2"/>
-        <Button x:Name="save_button" Content="save" HorizontalAlignment="Left" Margin="0,120,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="save_button_Click"/>
-        <Button x:Name="histogram_button" Content="histogram" HorizontalAlignment="Left" Margin="0,150,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="histogram_button_Click"/>
-        <Button x:Name="lighten_button" Content="rozjaśnij" HorizontalAlignment="Left" Margin="0,180,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="lighten_button_Click"/>
-        <Button x:Name="dim_button" Content="przyciemnij" HorizontalAlignment="Left" Margin="0,210,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="dim_button_Click"/>
-        <Button x:Name="equalize_button" Content="wyrownaj" HorizontalAlignment="Left" Margin="0,240,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="equalize_button_Click"  />
-        <Button x:Name="strech_button" Content="rozciągnij" HorizontalAlignment="Left" Margin="0,270,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="strech_button_Click" />
-        <Button x:Name="gray_button" Content="szarość" HorizontalAlignment="Left" Margin="0,300,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="gray_button_Click"  />
+        <Button x:Name="load_button" Content="zaladuj" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="105" Click="load_button_Click_1" Grid.Column="2"/>
+        <Button x:Name="zoom_button" Content="size+" HorizontalAlignment="Left" Margin="0,30,0,0" VerticalAlignment="Top" Width="105" Click="zoom_button_Click" Grid.Column="2"/>
+        <Button x:Name="unzoom_button" Content="size-" HorizontalAlignment="Left" Margin="0,60,0,0" VerticalAlignment="Top" Width="105" Click="unzoom_button_Click" Grid.Column="2"/>
+        <Button x:Name="save_button" Content="save" HorizontalAlignment="Left" Margin="0,90,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="save_button_Click"/>
+        <Button x:Name="histogram_button" Content="histogram" HorizontalAlignment="Left" Margin="0,120,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="histogram_button_Click"/>
+        <Button x:Name="lighten_button" Content="rozjaśnij" HorizontalAlignment="Left" Margin="0,150,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="lighten_button_Click"/>
+        <Button x:Name="dim_button" Content="przyciemnij" HorizontalAlignment="Left" Margin="0,180,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="dim_button_Click"/>
+        <Button x:Name="equalize_button" Content="wyrownaj" HorizontalAlignment="Left" Margin="0,210,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="equalize_button_Click"  />
+        <Button x:Name="strech_button" Content="rozciągnij" HorizontalAlignment="Left" Margin="0,240,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="strech_button_Click" />
+        <Button x:Name="binarization_button" Content="binaryzacja reczna" HorizontalAlignment="Left" Margin="0,330,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="binarization_button_Click"   />
+        <Button x:Name="otsu_button" Content="otsu" HorizontalAlignment="Left" Margin="0,390,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="otsu_button_Click"    />
+        <Button x:Name="niblack_button" Content="niblack" HorizontalAlignment="Left" Margin="0,420,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="niblack_button_Click"    />
         <TextBlock x:Name="text" HorizontalAlignment="Left" Margin="0,700,0,0" TextWrapping="Wrap" Text="RGB" VerticalAlignment="Top" Grid.Column="2"/>
         <TextBox Name="tr" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="20,510,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="40"/>
         <TextBox Name="tg" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="20,540,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="40"/>
@@ -48,10 +50,15 @@
         <TextBlock Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="3,570,0,0" TextWrapping="Wrap" Text="B" VerticalAlignment="Top" Width="10" />
         <Slider Grid.Column="2" Name="slider" HorizontalAlignment="Left" Height="26" Margin="5,630,0,0" VerticalAlignment="Top" Width="100" ValueChanged="Slider_ValueChanged" Value="1" Maximum="8" Minimum="0.5" />
         <TextBlock Grid.Column="2" Name="sliderText" HorizontalAlignment="Left" Height="18" Margin="9.6,660,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="73"/>
-        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="3,360,0,0" TextWrapping="Wrap" Text="min" VerticalAlignment="Top" Width="30" />
-        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="3,390,0,0" TextWrapping="Wrap" Text="max" VerticalAlignment="Top" Width="30" />
-        <TextBox Name="min" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="30,360,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="40"/>
-        <TextBox Name="max" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="30,390,0,0" TextWrapping="Wrap" Text="255" VerticalAlignment="Top" Width="40"/>
+        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="3,270,0,0" TextWrapping="Wrap" Text="min" VerticalAlignment="Top" Width="30" />
+        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="3,300,0,0" TextWrapping="Wrap" Text="max" VerticalAlignment="Top" Width="30" />
+        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="3,450,0,0" TextWrapping="Wrap" Text="k" VerticalAlignment="Top" Width="30" />
+        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="50,450,0,0" TextWrapping="Wrap" Text="window" VerticalAlignment="Top" Width="42" />
+        <TextBox Name="min" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="30,270,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="40"/>
+        <TextBox Name="max" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="30,300,0,0" TextWrapping="Wrap" Text="255" VerticalAlignment="Top" Width="40"/>
+        <TextBox Name="bin_value" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="30,360,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="40"/>
+        <TextBox Name="k_value" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="15,450,0,0" TextWrapping="Wrap" Text="0,2" VerticalAlignment="Top" Width="30"/>
+        <TextBox Name="window_value" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="95,450,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="30"/>
 
     </Grid>
 </Window>
