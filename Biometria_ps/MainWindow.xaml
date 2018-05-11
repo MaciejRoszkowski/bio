@@ -11,6 +11,7 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="300"></ColumnDefinition>
             <ColumnDefinition Width="130"></ColumnDefinition>
+            <ColumnDefinition Width="130"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Border Name="border" BorderThickness="1" Grid.Column="0" ClipToBounds="True">
 
@@ -41,6 +42,7 @@
         <Button x:Name="binarization_button" Content="binaryzacja reczna" HorizontalAlignment="Left" Margin="0,330,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="binarization_button_Click"   />
         <Button x:Name="otsu_button" Content="otsu" HorizontalAlignment="Left" Margin="0,390,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="otsu_button_Click"    />
         <Button x:Name="niblack_button" Content="niblack" HorizontalAlignment="Left" Margin="0,420,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="niblack_button_Click"    />
+        <Button x:Name="mask_button" Content="maska" HorizontalAlignment="Left" Margin="0,480,0,0" VerticalAlignment="Top" Width="105" Grid.Column="2" Click="niblack_button_Click"    />
         <TextBlock x:Name="text" HorizontalAlignment="Left" Margin="0,700,0,0" TextWrapping="Wrap" Text="RGB" VerticalAlignment="Top" Grid.Column="2"/>
         <TextBox Name="tr" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="20,510,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="40"/>
         <TextBox Name="tg" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="20,540,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="40"/>
@@ -59,6 +61,23 @@
         <TextBox Name="bin_value" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="30,360,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="40"/>
         <TextBox Name="k_value" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="15,450,0,0" TextWrapping="Wrap" Text="0,4" VerticalAlignment="Top" Width="30"/>
         <TextBox Name="window_value" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="95,450,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="30"/>
+
+        <!--2 kolumna-->
+        
+        
+        <TextBox Name="ul" Grid.Column="3" HorizontalAlignment="Left"  Height="22" Margin="0,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="30"/>
+        <TextBox Name="um" Grid.Column="3" HorizontalAlignment="Left" Height="22" Margin="40,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="30"/>
+        <TextBox Name="ur" Grid.Column="3" HorizontalAlignment="Left" Height="22" Margin="80,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="30"/>
+        <TextBox Name="ml" Grid.Column="3" HorizontalAlignment="Left"  Height="22" Margin="0,30,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="30"/>
+        <TextBox Name="mm" Grid.Column="3" HorizontalAlignment="Left"  Height="22" Margin="40,30,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="30"/>
+        <TextBox Name="mr" Grid.Column="3" HorizontalAlignment="Left"  Height="22" Margin="80,30,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="30"/>
+        <TextBox Name="ll" Grid.Column="3" HorizontalAlignment="Left"  Height="22" Margin="0,60,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="30"/>
+        <TextBox Name="lm" Grid.Column="3" HorizontalAlignment="Left"  Height="22" Margin="40,60,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="30"/>
+        <TextBox Name="lr" Grid.Column="3" HorizontalAlignment="Left"  Height="22" Margin="80,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30"/>
+        <Button x:Name="conv_button" Content="filtr konwolucyjny" HorizontalAlignment="Left" Margin="0,90,0,0" VerticalAlignment="Top" Width="105"  Grid.Column="3" Click="conv_button_Click"/>
+        <Button x:Name="median3" Content="medianowy 3x3" HorizontalAlignment="Left" Margin="0,120,0,0" VerticalAlignment="Top" Width="105"  Grid.Column="3" Click="median3_Click"/>
+        <Button x:Name="median5" Content="medianowy 5x5" HorizontalAlignment="Left" Margin="0,150,0,0" VerticalAlignment="Top" Width="105"  Grid.Column="3" Click="median5_Click"/>
+        <Button x:Name="kuwahara" Content="kuwahara" HorizontalAlignment="Left" Margin="0,180,0,0" VerticalAlignment="Top" Width="105"  Grid.Column="3" Click="kuwahara_Click" />
 
     </Grid>
 </Window>

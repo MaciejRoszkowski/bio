@@ -366,9 +366,9 @@ namespace Biometria_ps
            
             for (int i = 0; i < 256; i++)
             {
-                lutR[i] = (int)(((sR[i] - sR[posR]) / (1 - sR[posR])) * 255);
-                lutG[i] = (int)(((sG[i] - sG[posG]) / (1 - sG[posG])) * 255);
-                lutB[i] = (int)(((sB[i] - sB[posB]) / (1 - sB[posB])) * 255);
+                lutR[i] = Math.Abs((int)(((sR[i] - sR[posR]) / (1 - sR[posR])) * 255));
+                lutG[i] = Math.Abs((int)(((sG[i] - sG[posG]) / (1 - sG[posG])) * 255));
+                lutB[i] = Math.Abs((int)(((sB[i] - sB[posB]) / (1 - sB[posB])) * 255));
             }
             for (int i = 0; i < bm.Width; i++)
             {
@@ -558,6 +558,241 @@ namespace Biometria_ps
                 }
             }
             bm =new Bitmap( tmpBitmap);
+            displayImage(bm);
+        }
+
+        private void conv_button_Click(object sender, RoutedEventArgs e)
+        {
+            var tmpbm = new Bitmap(bm);
+
+            int sumR = 0;
+            int sumG = 0;
+            int sumB = 0;
+            var w = new int[3, 3];
+            w[0, 0] = int.Parse(ul.Text);
+            w[1, 0] = int.Parse(um.Text);
+            w[2, 0] = int.Parse(ur.Text);
+            w[0, 1] = int.Parse(ml.Text);
+            w[1, 1] = int.Parse(mm.Text);
+            w[2, 1] = int.Parse(mr.Text);
+            w[0, 2] = int.Parse(ll.Text);
+            w[1, 2] = int.Parse(lm.Text);
+            w[2, 2] = int.Parse(lr.Text);
+            int sum = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    sum += w[i, j];
+                }
+            }
+
+            var colorsR = new int[bm.Width, bm.Height];
+            var colorsG = new int[bm.Width, bm.Height];
+            var colorsB = new int[bm.Width, bm.Height];
+            var colorsA = new int[bm.Width, bm.Height];
+
+            for (int i = 0; i < bm.Width; i++)
+            {
+                for (int j = 0; j < bm.Height; j++)
+                {
+                    colorsR[i, j] = bm.GetPixel(i, j).R;
+                    colorsG[i, j] = bm.GetPixel(i, j).G;
+                    colorsB[i, j] = bm.GetPixel(i, j).B;
+                    colorsA[i, j] = bm.GetPixel(i, j).A;
+                }
+            }
+            
+            for (int x = 1; x < bm.Width-1; x++)
+            {
+                for (int y = 1; y < bm.Height-1; y++)
+                {
+                    for (int i = -1; i < 2; i++)
+                    {
+                        for (int j = -1; j < 2; j++)
+                        {
+                            sumR += colorsR[x + i, y + j] * w[i + 1, j + 1];
+                            sumG += colorsG[x + i, y + j] * w[i + 1, j + 1];
+                            sumB += colorsB[x + i, y + j] * w[i + 1, j + 1];
+
+                        }
+                    }
+                    if (sum != 0)
+                    {
+                        sumR /= sum;
+                        sumG /= sum;
+                        sumB /= sum;
+                    }
+                    sumR = sumR > 255 ? 255 : sumR < 0 ? 0 : sumR;
+                    sumG = sumG > 255 ? 255 : sumG < 0 ? 0 : sumG;
+                    sumB = sumB > 255 ? 255 : sumB < 0 ? 0 : sumB;
+
+
+                    tmpbm.SetPixel(x, y, System.Drawing.Color.FromArgb(colorsA[x,y], sumR, sumG, sumB));
+
+                    sumR = 0;
+                    sumG = 0;
+                    sumB = 0;
+                }
+            }
+            bm = new Bitmap(tmpbm);
+            displayImage(bm);
+        }
+
+        private void median3_Click(object sender, RoutedEventArgs e)
+        {
+            Median(3);
+        }
+        private void median5_Click(object sender, RoutedEventArgs e)
+        {
+            Median(5);
+        }
+        private void Median(int size)
+        {
+            var tmpbm = new Bitmap(bm);
+            int a = 0;
+
+            var valuesR = new List<int>();
+            var valuesG = new List<int>();
+            var valuesB = new List<int>();
+
+            var tmpCol = new System.Drawing.Color();
+            for (int i = size/2; i < bm.Width-size/2; i++)
+            {
+                for (int j = size/2; j < bm.Height-size/2; j++)
+                {
+                    for (int k = 0; k < size; k++)
+                    {
+                        for (int l = 0; l < size; l++)
+                        {
+                            tmpCol = bm.GetPixel(i + k - size/2, j + l - size/2);
+                            valuesR.Add(tmpCol.R);
+                            valuesG.Add(tmpCol.G);
+                            valuesB.Add(tmpCol.B);
+                            if (k == size / 2)
+                                a = tmpCol.A;
+                            
+                        }
+                    }
+                    valuesB.Sort();
+                    valuesR.Sort();
+                    valuesG.Sort();
+
+                    tmpbm.SetPixel(i, j, System.Drawing.Color.FromArgb(a, valuesR[size * size / 2], valuesG[size * size / 2], valuesB[size * size / 2]));
+
+                    valuesB.Clear();
+                    valuesR.Clear();
+                    valuesG.Clear();
+                }
+            }
+            bm = new Bitmap(tmpbm);
+            displayImage(bm);
+        }
+
+        private void kuwahara_Click(object sender, RoutedEventArgs e)
+        {
+            var rs = new double[4];
+            var gs = new double[4];
+            var bs = new double[4];
+
+            var rw = new double[4];
+            var gw = new double[4];
+            var bw = new double[4];
+
+            int rmin, gmin, bmin;
+            var tmpbm = new Bitmap(bm);
+
+            var colorsR = new int[bm.Width, bm.Height];
+            var colorsG = new int[bm.Width, bm.Height];
+            var colorsB = new int[bm.Width, bm.Height];
+            var tmpCol = new System.Drawing.Color();
+
+            for (int i = 0; i < bm.Width; i++)
+            {
+                for (int j = 0; j < bm.Height; j++)
+                {
+                    tmpCol = bm.GetPixel(i, j);
+                    colorsR[i, j] = tmpCol.R;
+                    colorsG[i, j] = tmpCol.G;
+                    colorsB[i, j] = tmpCol.B;
+                }
+            }
+
+            for (int i = 2; i < bm.Width - 2; i++)
+            {
+                for (int j = 2; j < bm.Height - 2; j++)
+                {
+                    for (int k = 0; k < 4; k++)
+                    {
+                        rs[k] = 0;
+                        gs[k] = 0;
+                        bs[k] = 0;
+                    }
+
+                    for (int k = 0; k < 3; k++)
+                    {
+                        for (int l = 0; l < 3; l++)
+                        {
+                            rs[0] += colorsR[i - 2 + k, j - 2 + l] / 9.0;
+                            rs[1] += colorsR[i + k, j - 2 + l] / 9.0;
+                            rs[2] += colorsR[i - 2 + k, j + l] / 9.0;
+                            rs[3] += colorsR[i + k, j + l] / 9.0;
+
+                            gs[0] += colorsG[i - 2 + k, j - 2 + l] / 9.0;
+                            gs[1] += colorsG[i + k, j - 2 + l] / 9.0;
+                            gs[2] += colorsG[i - 2 + k, j + l] / 9.0;
+                            gs[3] += colorsG[i + k, j + l] / 9.0;
+
+                            bs[0] += colorsB[i - 2 + k, j - 2 + l] / 9.0;
+                            bs[1] += colorsB[i + k, j - 2 + l] / 9.0;
+                            bs[2] += colorsB[i - 2 + k, j + l] / 9.0;
+                            bs[3] += colorsB[i + k, j + l] / 9.0;
+                        }
+                    }
+
+                    for (int k = 0; k < 4; k++)
+                    {
+                        rw[k] = 0;
+                        gw[k] = 0;
+                        bw[k] = 0;
+                    }
+                    for (int k = 0; k < 3; k++)
+                    {
+                        for (int l = 0; l < 3; l++)
+                        {
+                            rw[0] += Math.Pow(colorsR[i - 2 + k, j - 2 + l]-rs[0], 2);
+                            rw[1] += Math.Pow(colorsR[i + k, j - 2 + l]-rs[1], 2);
+                            rw[2] += Math.Pow(colorsR[i - 2 + k, j + l]-rs[2], 2);
+                            rw[3] += Math.Pow(colorsR[i + k, j + l]-rs[3], 2);
+
+                            gw[0] += Math.Pow(colorsR[i - 2 + k, j - 2 + l] - gs[0], 2);
+                            gw[1] += Math.Pow(colorsR[i + k, j - 2 + l] - gs[1], 2);
+                            gw[2] += Math.Pow(colorsR[i - 2 + k, j + l] - gs[2], 2);
+                            gw[3] += Math.Pow(colorsR[i + k, j + l] - gs[3], 2);
+
+                            bw[0] += Math.Pow(colorsR[i - 2 + k, j - 2 + l] - bs[0], 2);
+                            bw[1] += Math.Pow(colorsR[i + k, j - 2 + l] - bs[1], 2);
+                            bw[2] += Math.Pow(colorsR[i - 2 + k, j + l] - bs[2], 2);
+                            bw[3] += Math.Pow(colorsR[i + k, j + l] - bs[3], 2);
+
+
+                        }
+                    }
+                    rmin = 0;
+                    gmin = 0;
+                    bmin = 0;
+                    for (int k = 1; k < 4; k++)
+                    {
+                        rmin = rw[k] < rw[rmin] ? k : rmin;
+                        gmin = gw[k] < gw[rmin] ? k : gmin;
+                        bmin = bw[k] < bw[rmin] ? k : bmin;
+                    }
+
+                    tmpbm.SetPixel(i, j, System.Drawing.Color.FromArgb((int)rs[rmin], (int)gs[gmin], (int)bs[bmin]));
+
+                }
+            }
+            bm = new Bitmap(tmpbm);
             displayImage(bm);
         }
     }
