@@ -78,6 +78,7 @@
         <Button x:Name="median3" Content="medianowy 3x3" HorizontalAlignment="Left" Margin="0,120,0,0" VerticalAlignment="Top" Width="105"  Grid.Column="3" Click="median3_Click"/>
         <Button x:Name="median5" Content="medianowy 5x5" HorizontalAlignment="Left" Margin="0,150,0,0" VerticalAlignment="Top" Width="105"  Grid.Column="3" Click="median5_Click"/>
         <Button x:Name="kuwahara" Content="kuwahara" HorizontalAlignment="Left" Margin="0,180,0,0" VerticalAlignment="Top" Width="105"  Grid.Column="3" Click="kuwahara_Click" />
+        <Button x:Name="kmm" Content="kmm" HorizontalAlignment="Left" Margin="0,210,0,0" VerticalAlignment="Top" Width="105"  Grid.Column="3" Click="kmm_Click"  />
 
     </Grid>
 </Window>
